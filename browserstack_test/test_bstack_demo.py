@@ -3,6 +3,7 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 
 from utils.config import BSTACK_DEMO_URL, DEMO_USERNAME, DEMO_PASSWORD
 
@@ -35,12 +36,12 @@ class TestBStackDemo:
         username_field = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "react-select-2-input"))
         )
-        username_field.send_keys(DEMO_USERNAME)
+        username_field.send_keys(DEMO_USERNAME + Keys.TAB)
         
         password_field = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "react-select-3-input"))
         )
-        password_field.send_keys(DEMO_PASSWORD)
+        password_field.send_keys(DEMO_PASSWORD + Keys.TAB)
         
         # Click on Login button
         login_button = WebDriverWait(driver, 10).until(
@@ -48,17 +49,20 @@ class TestBStackDemo:
         )
         login_button.click()
         
-        # Wait for login to complete
+        # Wait for the username to be visible, indicating successful login
         WebDriverWait(driver, 10).until(
-            EC.invisibility_of_element_located((By.CLASS_NAME, "float-cart__content"))
+            EC.presence_of_element_located((By.CLASS_NAME, "username"))
         )
         
         # 2. Filter for Samsung devices
         # Click on the vendor filter for Samsung
+        # First confirm it's present
         samsung_filter = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//span[text()='Samsung']/preceding-sibling::span"))
+            EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='checkbox'][value='Samsung']"))
         )
-        samsung_filter.click()
+
+        # Then force-click it via JavaScript (if needed)
+        driver.execute_script("arguments[0].click();", samsung_filter)
         
         # Wait for the filter to apply
         time.sleep(2)  # Adding a small delay to ensure filter is applied
@@ -97,4 +101,3 @@ class TestBStackDemo:
         except:
             # If not found, test fails
             assert False, "Galaxy S20+ was not found in the favorites page"
-

@@ -63,4 +63,3 @@ def driver(browser_config):
     
     # Quit the driver after the test
     driver.quit()
-
