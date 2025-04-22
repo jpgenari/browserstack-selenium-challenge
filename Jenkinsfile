@@ -14,9 +14,12 @@ pipeline {
         stage('Setup') {
             steps {
                 echo 'Setting up Python environment...'
-                sh 'which python3 && python3 --version'
-                sh 'python3 -m pip install --upgrade pip'
-                sh 'python3 -m pip install -r requirements.txt'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    python3 -m pip install --upgrade pip
+                    python3 -m pip install -r requirements.txt
+                '''
             }
         }
 
@@ -25,6 +28,7 @@ pipeline {
                 stage('Windows 10 Chrome') {
                     steps {
                         sh '''
+                            . venv/bin/activate
                             export BROWSERSTACK_USERNAME=$BROWSERSTACK_CREDENTIALS_USR
                             export BROWSERSTACK_ACCESS_KEY=$BROWSERSTACK_CREDENTIALS_PSW
                             export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
@@ -38,6 +42,7 @@ pipeline {
                 stage('macOS Ventura Firefox') {
                     steps {
                         sh '''
+                            . venv/bin/activate
                             export BROWSERSTACK_USERNAME=$BROWSERSTACK_CREDENTIALS_USR
                             export BROWSERSTACK_ACCESS_KEY=$BROWSERSTACK_CREDENTIALS_PSW
                             export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
@@ -51,6 +56,7 @@ pipeline {
                 stage('Samsung Galaxy S22') {
                     steps {
                         sh '''
+                            . venv/bin/activate
                             export BROWSERSTACK_USERNAME=$BROWSERSTACK_CREDENTIALS_USR
                             export BROWSERSTACK_ACCESS_KEY=$BROWSERSTACK_CREDENTIALS_PSW
                             export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
