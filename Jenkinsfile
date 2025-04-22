@@ -1,3 +1,8 @@
+environment {
+    PATH = "/opt/homebrew/bin/python3"
+    ...
+}
+
 pipeline {
     agent any
     
