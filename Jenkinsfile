@@ -11,8 +11,8 @@ pipeline {
         stage('Setup') {
             steps {
                 echo 'Setting up Python environment...'
-                sh 'python -m pip install --upgrade pip'
-                sh 'pip install -r requirements.txt'
+                sh 'python3 -m pip install --upgrade pip'
+                sh 'python3 -m pip install -r requirements.txt'
             }
         }
         
@@ -26,7 +26,7 @@ pipeline {
                             export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
                             export DEMO_PASSWORD=$DEMO_CREDENTIALS_PSW
                             cd browserstack_test
-                            python -m pytest test_bstack_demo.py --browser=windows_chrome -v
+                            python3 -m pytest test_bstack_demo.py --browser=windows_chrome -v
                         '''
                     }
                 }
@@ -39,7 +39,7 @@ pipeline {
                             export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
                             export DEMO_PASSWORD=$DEMO_CREDENTIALS_PSW
                             cd browserstack_test
-                            python -m pytest test_bstack_demo.py --browser=mac_firefox -v
+                            python3 -m pytest test_bstack_demo.py --browser=mac_firefox -v
                         '''
                     }
                 }
@@ -52,7 +52,7 @@ pipeline {
                             export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
                             export DEMO_PASSWORD=$DEMO_CREDENTIALS_PSW
                             cd browserstack_test
-                            python -m pytest test_bstack_demo.py --browser=galaxy_s22 -v
+                            python3 -m pytest test_bstack_demo.py --browser=galaxy_s22 -v
                         '''
                     }
                 }
