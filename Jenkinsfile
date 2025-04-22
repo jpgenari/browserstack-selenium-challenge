@@ -1,26 +1,25 @@
-environment {
-    PATH = "/opt/homebrew/bin/python3"
-    ...
-}
-
 pipeline {
     agent any
-    
+
     environment {
-        // Define credential IDs (to be configured in Jenkins)
+        // Use updated Python from Homebrew
+        PATH = "/opt/homebrew/bin:$PATH"
+        
+        // Jenkins credentials
         BROWSERSTACK_CREDENTIALS = credentials('browserstack-credentials')
         DEMO_CREDENTIALS = credentials('bstack-demo-credentials')
     }
-    
+
     stages {
         stage('Setup') {
             steps {
                 echo 'Setting up Python environment...'
+                sh 'which python3 && python3 --version'
                 sh 'python3 -m pip install --upgrade pip'
                 sh 'python3 -m pip install -r requirements.txt'
             }
         }
-        
+
         stage('Run Tests in Parallel') {
             parallel {
                 stage('Windows 10 Chrome') {
@@ -35,7 +34,7 @@ pipeline {
                         '''
                     }
                 }
-                
+
                 stage('macOS Ventura Firefox') {
                     steps {
                         sh '''
@@ -48,7 +47,7 @@ pipeline {
                         '''
                     }
                 }
-                
+
                 stage('Samsung Galaxy S22') {
                     steps {
                         sh '''
@@ -63,15 +62,15 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Report') {
             steps {
                 echo 'Test execution completed'
-                // Here you could add steps to generate and publish test reports
+                // Add steps to publish reports if needed
             }
         }
     }
-    
+
     post {
         always {
             echo 'Cleaning up workspace'
