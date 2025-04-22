@@ -18,48 +18,53 @@ def driver(browser_config):
     """
     Initialize WebDriver based on the browser configuration
     """
-    browser_name = browser_config.get('browserName', '')
-    
-    capabilities = {
-        'bstack:options': {
-            'userName': BROWSERSTACK_HUB_URL.split('//')[1].split(':')[0],
-            'accessKey': BROWSERSTACK_HUB_URL.split(':')[2].split('@')[0],
-            'sessionName': browser_config.get('sessionName', 'BStack Demo Test'),
-        }
+    is_mobile = 'deviceName' in browser_config
+
+    bstack_options = {
+        'userName': BROWSERSTACK_HUB_URL.split('//')[1].split(':')[0],
+        'accessKey': BROWSERSTACK_HUB_URL.split(':')[2].split('@')[0],
+        'sessionName': browser_config.get('sessionName', 'BStack Demo Test'),
     }
-    
-    # Add browser-specific capabilities
-    if 'deviceName' in browser_config:
-        # Mobile configuration
-        capabilities['bstack:options'].update({
+
+    if is_mobile:
+        # Mobile-specific capabilities
+        bstack_options.update({
             'deviceName': browser_config['deviceName'],
             'platformName': browser_config['platformName'],
             'platformVersion': browser_config['platformVersion'],
-            'realMobile': browser_config.get('realMobile', 'false')
+            'realMobile': browser_config.get('realMobile', 'false'),
         })
+        # Mobile: Use minimal ChromeOptions (will be ignored by BrowserStack mobile anyway)
+        options = ChromeOptions()
+        options.set_capability('bstack:options', bstack_options)
     else:
-        # Desktop configuration
-        capabilities['bstack:options'].update({
+        # Desktop-specific capabilities
+        bstack_options.update({
             'os': browser_config['os'],
             'osVersion': browser_config['osVersion'],
         })
-        capabilities.update({
-            'browserName': browser_config['browserName'],
-            'browserVersion': browser_config['browserVersion'],
-        })
-    
-    # Initialize the appropriate driver
+        browser_name = browser_config['browserName']
+        browser_version = browser_config['browserVersion']
+
+        if browser_name.lower() == 'chrome':
+            options = ChromeOptions()
+        elif browser_name.lower() == 'firefox':
+            options = FirefoxOptions()
+        else:
+            raise ValueError(f"Unsupported browser: {browser_name}")
+
+        options.set_capability('browserName', browser_name)
+        options.set_capability('browserVersion', browser_version)
+        options.set_capability('bstack:options', bstack_options)
+
+    # Init driver
     driver = webdriver.Remote(
         command_executor=BROWSERSTACK_HUB_URL,
-        desired_capabilities=capabilities
+        options=options
     )
-    
-    # Set window size for desktop browsers
-    if 'deviceName' not in browser_config:
+
+    if not is_mobile:
         driver.set_window_size(1366, 768)
-    
-    # Yield the driver for the test
+
     yield driver
-    
-    # Quit the driver after the test
     driver.quit()
