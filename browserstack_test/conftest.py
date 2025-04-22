@@ -5,13 +5,16 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 from utils.config import BROWSERSTACK_HUB_URL, BROWSERS
 
+
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="windows_chrome",
-                    help="Browser configuration to use for testing")
+                     help="Browser configuration to use for testing")
+
 
 @pytest.fixture
 def browser_config(request):
     return BROWSERS[request.config.getoption("--browser")]
+
 
 @pytest.fixture
 def driver(browser_config):
@@ -34,7 +37,7 @@ def driver(browser_config):
             'platformVersion': browser_config['platformVersion'],
             'realMobile': browser_config.get('realMobile', 'false'),
         })
-        # Mobile: Use minimal ChromeOptions (will be ignored by BrowserStack mobile anyway)
+        # Mobile: Use minimal ChromeOptions
         options = ChromeOptions()
         options.set_capability('bstack:options', bstack_options)
     else:

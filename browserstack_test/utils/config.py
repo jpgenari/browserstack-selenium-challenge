@@ -38,7 +38,10 @@ BROWSERS = {
 }
 
 # BrowserStack Hub URL
-BROWSERSTACK_HUB_URL = f'https://{BROWSERSTACK_USERNAME}:{BROWSERSTACK_ACCESS_KEY}@hub-cloud.browserstack.com/wd/hub'
+BROWSERSTACK_HUB_URL = (
+    f'https://{BROWSERSTACK_USERNAME}:'
+    f'{BROWSERSTACK_ACCESS_KEY}@hub-cloud.browserstack.com/wd/hub'
+)
 
 # Test site URL
 BSTACK_DEMO_URL = 'https://www.bstackdemo.com'
