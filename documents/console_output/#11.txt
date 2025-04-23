@@ -1,0 +1,286 @@
+Started by user Joao Paulo Genari
+Obtained Jenkinsfile from git https://github.com/jpgenari/browserstack-selenium-challenge.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/jpgenari/browserstack-selenium-challenge.git
+ > git init /Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge # timeout=10
+Fetching upstream changes from https://github.com/jpgenari/browserstack-selenium-challenge.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.39.5 (Apple Git-154)'
+ > git fetch --tags --force --progress -- https://github.com/jpgenari/browserstack-selenium-challenge.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/jpgenari/browserstack-selenium-challenge.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision bb5221ec1af49d0730a0034e77291b7e071f98fe (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f bb5221ec1af49d0730a0034e77291b7e071f98fe # timeout=10
+Commit message: "Doc: add sceenshots"
+ > git rev-list --no-walk c0a898519efe93b506797a7a40fcfe340341315a # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $DEMO_CREDENTIALS or $DEMO_CREDENTIALS_PSW or $BROWSERSTACK_CREDENTIALS or $BROWSERSTACK_CREDENTIALS_USR or $BROWSERSTACK_CREDENTIALS_PSW
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Setup)
+[Pipeline] echo
+Setting up Python environment...
+[Pipeline] sh
++ python3 -m venv venv
++ . venv/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ case "$(uname)" in
++++ uname
+++ export VIRTUAL_ENV=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv
+++ VIRTUAL_ENV=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv
+++ _OLD_VIRTUAL_PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+++ PATH=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+++ export PATH
+++ VIRTUAL_ENV_PROMPT=venv
+++ export VIRTUAL_ENV_PROMPT
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv) '
+++ export PS1
+++ hash -r
++ python3 -m pip install --upgrade pip
+Requirement already satisfied: pip in ./venv/lib/python3.12/site-packages (25.0.1)
++ python3 -m pip install -r requirements.txt
+Requirement already satisfied: pytest==7.4.0 in ./venv/lib/python3.12/site-packages (from -r requirements.txt (line 1)) (7.4.0)
+Requirement already satisfied: pytest-xdist==3.3.1 in ./venv/lib/python3.12/site-packages (from -r requirements.txt (line 2)) (3.3.1)
+Collecting selenium==4.11.2 (from -r requirements.txt (line 3))
+  Using cached selenium-4.11.2-py3-none-any.whl.metadata (7.0 kB)
+Requirement already satisfied: python-dotenv==1.0.0 in ./venv/lib/python3.12/site-packages (from -r requirements.txt (line 4)) (1.0.0)
+Requirement already satisfied: iniconfig in ./venv/lib/python3.12/site-packages (from pytest==7.4.0->-r requirements.txt (line 1)) (2.1.0)
+Requirement already satisfied: packaging in ./venv/lib/python3.12/site-packages (from pytest==7.4.0->-r requirements.txt (line 1)) (25.0)
+Requirement already satisfied: pluggy<2.0,>=0.12 in ./venv/lib/python3.12/site-packages (from pytest==7.4.0->-r requirements.txt (line 1)) (1.5.0)
+Requirement already satisfied: execnet>=1.1 in ./venv/lib/python3.12/site-packages (from pytest-xdist==3.3.1->-r requirements.txt (line 2)) (2.1.1)
+Requirement already satisfied: urllib3<3,>=1.26 in ./venv/lib/python3.12/site-packages (from urllib3[socks]<3,>=1.26->selenium==4.11.2->-r requirements.txt (line 3)) (1.26.20)
+Requirement already satisfied: trio~=0.17 in ./venv/lib/python3.12/site-packages (from selenium==4.11.2->-r requirements.txt (line 3)) (0.30.0)
+Requirement already satisfied: trio-websocket~=0.9 in ./venv/lib/python3.12/site-packages (from selenium==4.11.2->-r requirements.txt (line 3)) (0.12.2)
+Requirement already satisfied: certifi>=2021.10.8 in ./venv/lib/python3.12/site-packages (from selenium==4.11.2->-r requirements.txt (line 3)) (2025.1.31)
+Requirement already satisfied: attrs>=23.2.0 in ./venv/lib/python3.12/site-packages (from trio~=0.17->selenium==4.11.2->-r requirements.txt (line 3)) (25.3.0)
+Requirement already satisfied: sortedcontainers in ./venv/lib/python3.12/site-packages (from trio~=0.17->selenium==4.11.2->-r requirements.txt (line 3)) (2.4.0)
+Requirement already satisfied: idna in ./venv/lib/python3.12/site-packages (from trio~=0.17->selenium==4.11.2->-r requirements.txt (line 3)) (3.10)
+Requirement already satisfied: outcome in ./venv/lib/python3.12/site-packages (from trio~=0.17->selenium==4.11.2->-r requirements.txt (line 3)) (1.3.0.post0)
+Requirement already satisfied: sniffio>=1.3.0 in ./venv/lib/python3.12/site-packages (from trio~=0.17->selenium==4.11.2->-r requirements.txt (line 3)) (1.3.1)
+Requirement already satisfied: wsproto>=0.14 in ./venv/lib/python3.12/site-packages (from trio-websocket~=0.9->selenium==4.11.2->-r requirements.txt (line 3)) (1.2.0)
+Requirement already satisfied: PySocks!=1.5.7,<2.0,>=1.5.6 in ./venv/lib/python3.12/site-packages (from urllib3[socks]<3,>=1.26->selenium==4.11.2->-r requirements.txt (line 3)) (1.7.1)
+Requirement already satisfied: h11<1,>=0.9.0 in ./venv/lib/python3.12/site-packages (from wsproto>=0.14->trio-websocket~=0.9->selenium==4.11.2->-r requirements.txt (line 3)) (0.14.0)
+Using cached selenium-4.11.2-py3-none-any.whl (7.2 MB)
+Installing collected packages: selenium
+  Attempting uninstall: selenium
+    Found existing installation: selenium 4.9.0
+    Uninstalling selenium-4.9.0:
+      Successfully uninstalled selenium-4.9.0
+Successfully installed selenium-4.11.2
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Tests in Parallel)
+[Pipeline] parallel
+[Pipeline] { (Branch: Windows 10 Chrome)
+[Pipeline] { (Branch: macOS Ventura Firefox)
+[Pipeline] { (Branch: Samsung Galaxy S22)
+[Pipeline] stage
+[Pipeline] { (Windows 10 Chrome)
+[Pipeline] stage
+[Pipeline] { (macOS Ventura Firefox)
+[Pipeline] stage
+[Pipeline] { (Samsung Galaxy S22)
+[Pipeline] sh
+[Pipeline] sh
+[Pipeline] sh
++ . venv/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ case "$(uname)" in
++++ uname
+++ export VIRTUAL_ENV=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv
+++ VIRTUAL_ENV=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv
+++ _OLD_VIRTUAL_PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+++ PATH=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+++ export PATH
+++ VIRTUAL_ENV_PROMPT=venv
+++ export VIRTUAL_ENV_PROMPT
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv) '
+++ export PS1
+++ hash -r
++ export BROWSERSTACK_USERNAME=****
++ BROWSERSTACK_USERNAME=****
++ export BROWSERSTACK_ACCESS_KEY=****
++ BROWSERSTACK_ACCESS_KEY=****
++ export DEMO_USERNAME=demouser
++ DEMO_USERNAME=demouser
++ export DEMO_PASSWORD=****
++ DEMO_PASSWORD=****
++ cd browserstack_test
++ python3 -m pytest test_bstack_demo.py --browser=windows_chrome -v
++ . venv/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
++ . venv/bin/activate
+++ deactivate nondestructive
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ '[' -n '' ']'
+++ hash -r
+++ '[' -n '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ case "$(uname)" in
++++ uname
+++ '[' '!' nondestructive = nondestructive ']'
+++ case "$(uname)" in
++++ uname
+++ export VIRTUAL_ENV=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv
+++ export VIRTUAL_ENV=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv
+++ VIRTUAL_ENV=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv
+++ VIRTUAL_ENV=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv
+++ _OLD_VIRTUAL_PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+++ _OLD_VIRTUAL_PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+++ PATH=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+++ export PATH
+++ VIRTUAL_ENV_PROMPT=venv
+++ export VIRTUAL_ENV_PROMPT
+++ PATH=/Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+++ export PATH
+++ VIRTUAL_ENV_PROMPT=venv
+++ '[' -n '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv) '
+++ export PS1
+++ hash -r
+++ export VIRTUAL_ENV_PROMPT
+++ '[' -n '' ']'
+++ '[' -z '' ']'
++ export BROWSERSTACK_USERNAME=****
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(venv) '
+++ export PS1
+++ hash -r
++ BROWSERSTACK_USERNAME=****
++ export BROWSERSTACK_USERNAME=****
++ export BROWSERSTACK_ACCESS_KEY=****
++ BROWSERSTACK_USERNAME=****
++ BROWSERSTACK_ACCESS_KEY=****
++ export DEMO_USERNAME=demouser
++ export BROWSERSTACK_ACCESS_KEY=****
++ DEMO_USERNAME=demouser
++ BROWSERSTACK_ACCESS_KEY=****
++ export DEMO_USERNAME=demouser
++ export DEMO_PASSWORD=****
++ DEMO_USERNAME=demouser
++ DEMO_PASSWORD=****
++ cd browserstack_test
++ export DEMO_PASSWORD=****
++ python3 -m pytest test_bstack_demo.py --browser=mac_firefox -v
++ DEMO_PASSWORD=****
++ cd browserstack_test
++ python3 -m pytest test_bstack_demo.py --browser=galaxy_s22 -v
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-7.4.0, pluggy-1.5.0 -- /Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/browserstack_test
+plugins: xdist-3.3.1
+collecting ... collected 1 item
+
+============================= test session starts ==============================
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-7.4.0, pluggy-1.5.0 -- /Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/browserstack_test
+plugins: xdist-3.3.1
+collecting ... collected 1 item
+
+platform darwin -- Python 3.12.10, pytest-7.4.0, pluggy-1.5.0 -- /Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/joaopaulogenari/.jenkins/workspace/browserstack-selenium-challenge/browserstack_test
+plugins: xdist-3.3.1
+collecting ... collected 1 item
+
+test_bstack_demo.py::TestBStackDemo::test_favorite_galaxy_s20_plus PASSED [100%]
+
+============================== 1 passed in 13.45s ==============================
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+test_bstack_demo.py::TestBStackDemo::test_favorite_galaxy_s20_plus PASSED [100%]
+
+============================== 1 passed in 23.07s ==============================
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+test_bstack_demo.py::TestBStackDemo::test_favorite_galaxy_s20_plus PASSED [100%]
+
+============================== 1 passed in 38.03s ==============================
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // parallel
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Report)
+[Pipeline] echo
+Test execution completed
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Cleaning up workspace
+[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is used...
+[WS-CLEANUP] done
+[Pipeline] echo
+Tests executed successfully!
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

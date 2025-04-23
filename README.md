@@ -102,11 +102,11 @@ Screenshots of successful build #9
 
 **PAGE**|**SCREENSHOT**
 ----------|----------
-Pipeline Overview|![pipeline-overview](/screenshots/pipeline_overview.png)
-Pipeline Console Parallel|![pipeline-parallel](/screenshots/pipeline_console_paarallel.png)
-Pipeline Post Actions|![pipeline-post-actions](/screenshots/pipeline_console_post_actions.png)
-Console Output|![console-output](/screenshots/console_output.png)
-Pipeline Configure|![configure](/screenshots/configure.png)
+Pipeline Overview|![pipeline-overview](/documents/screenshots/pipeline_overview.png)
+Pipeline Console Parallel|![pipeline-parallel](/documents/screenshots/pipeline_console_paarallel.png)
+Pipeline Post Actions|![pipeline-post-actions](/documents/screenshots/pipeline_console_post_actions.png)
+Console Output|![console-output](/documents/screenshots/console_output.png)
+Pipeline Configure|![configure](/documents/screenshots/configure.png)
 
 ## Notes
 
