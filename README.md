@@ -98,7 +98,15 @@ pytest test_bstack_demo.py --browser=galaxy_s22 -v
 
 ## Screenshots
 
-(Here you would add screenshots of successful Jenkins builds)
+Screenshots of successful build #9
+
+**PAGE**|**SCREENSHOT**
+----------|----------
+Pipeline Overview|![pipeline-overview](/screenshots/pipeline_overview.png)
+Pipeline Console Parallel|![pipeline-parallel](/screenshots/pipeline_console_paarallel.png)
+Pipeline Post Actions|![pipeline-post-actions](/screenshots/pipeline_console_post_actions.png)
+Console Output|![console-output](/screenshots/console_output.png)
+Pipeline Configure|![configure](/screenshots/configure.png)
 
 ## Notes
 
