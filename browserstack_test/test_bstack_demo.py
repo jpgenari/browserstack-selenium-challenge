@@ -65,7 +65,7 @@ class TestBStackDemo:
              ))
         )
 
-        # Then force-click it via JavaScript (if needed)
+        # Then force-click it via JavaScript
         driver.execute_script("arguments[0].click();", samsung_filter)
 
         # Wait for the filter to apply
