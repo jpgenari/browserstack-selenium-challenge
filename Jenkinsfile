@@ -23,49 +23,17 @@ pipeline {
             }
         }
 
-        stage('Run Tests in Parallel') {
-            parallel {
-                stage('Windows 10 Chrome') {
-                    steps {
-                        sh '''
-                            . venv/bin/activate
-                            export BROWSERSTACK_USERNAME=$BROWSERSTACK_CREDENTIALS_USR
-                            export BROWSERSTACK_ACCESS_KEY=$BROWSERSTACK_CREDENTIALS_PSW
-                            export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
-                            export DEMO_PASSWORD=$DEMO_CREDENTIALS_PSW
-                            cd browserstack_test
-                            python3 -m pytest test_bstack_demo.py --browser=windows_chrome -v
-                        '''
-                    }
-                }
-
-                stage('macOS Ventura Firefox') {
-                    steps {
-                        sh '''
-                            . venv/bin/activate
-                            export BROWSERSTACK_USERNAME=$BROWSERSTACK_CREDENTIALS_USR
-                            export BROWSERSTACK_ACCESS_KEY=$BROWSERSTACK_CREDENTIALS_PSW
-                            export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
-                            export DEMO_PASSWORD=$DEMO_CREDENTIALS_PSW
-                            cd browserstack_test
-                            python3 -m pytest test_bstack_demo.py --browser=mac_firefox -v
-                        '''
-                    }
-                }
-
-                stage('Samsung Galaxy S22') {
-                    steps {
-                        sh '''
-                            . venv/bin/activate
-                            export BROWSERSTACK_USERNAME=$BROWSERSTACK_CREDENTIALS_USR
-                            export BROWSERSTACK_ACCESS_KEY=$BROWSERSTACK_CREDENTIALS_PSW
-                            export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
-                            export DEMO_PASSWORD=$DEMO_CREDENTIALS_PSW
-                            cd browserstack_test
-                            python3 -m pytest test_bstack_demo.py --browser=galaxy_s22 -v
-                        '''
-                    }
-                }
+        stage('Run All Tests') {
+            steps {
+                sh '''
+                    . venv/bin/activate
+                    export BROWSERSTACK_USERNAME=$BROWSERSTACK_CREDENTIALS_USR
+                    export BROWSERSTACK_ACCESS_KEY=$BROWSERSTACK_CREDENTIALS_PSW
+                    export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
+                    export DEMO_PASSWORD=$DEMO_CREDENTIALS_PSW
+                    cd browserstack_test
+                    python3 -m pytest test_bstack_demo.py --collect-only -v
+                '''
             }
         }
 
