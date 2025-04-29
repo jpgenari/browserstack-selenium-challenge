@@ -32,7 +32,7 @@ pipeline {
                     export DEMO_USERNAME=$DEMO_CREDENTIALS_USR
                     export DEMO_PASSWORD=$DEMO_CREDENTIALS_PSW
                     cd browserstack_test
-                    python3 -m pytest test_bstack_demo.py --collect-only -v
+                    python3 -m pytest test_bstack_demo.py -n 3 -v
                 '''
             }
         }
