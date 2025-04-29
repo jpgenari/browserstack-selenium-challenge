@@ -10,9 +10,9 @@ from utils.config import BROWSERSTACK_HUB_URL, BROWSERS
 BROWSER_LIST = ["windows_chrome", "mac_firefox", "galaxy_s22"]
 
 
-# def pytest_addoption(parser):
-#     parser.addoption("--browser", action="append",  # <-- CHANGED from 'store' to 'append' to collect multiple values
-#                      help="Browser configuration(s) to use for testing")
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="append",  # <-- CHANGED from 'store' to 'append' to collect multiple values
+                     help="Browser configuration(s) to use for testing")
 
 
 @pytest.fixture(params=["windows_chrome", "mac_firefox", "galaxy_s22"])  # <-- Parametrize to run all 3 together
