@@ -7,7 +7,7 @@ from utils.config import BROWSERSTACK_HUB_URL, BROWSERS
 
 
 # Always test these browsers
-BROWSER_LIST = ["windows_chrome", "mac_firefox", "galaxy_s22"]
+# BROWSER_LIST = ["windows_chrome", "mac_firefox", "galaxy_s22"]
 
 
 # def pytest_addoption(parser):
@@ -18,7 +18,14 @@ BROWSER_LIST = ["windows_chrome", "mac_firefox", "galaxy_s22"]
 #     )
 
 
-@pytest.fixture(params=["windows_chrome", "mac_firefox", "galaxy_s22"])
+# @pytest.fixture(params=["windows_chrome", "mac_firefox", "galaxy_s22"])
+# def browser_config(request):
+#     browser_name = request.param
+#     return BROWSERS[browser_name]
+
+BROWSER_LIST = list(BROWSERS.keys())
+
+@pytest.fixture(params=BROWSER_LIST)
 def browser_config(request):
     browser_name = request.param
     return BROWSERS[browser_name]
