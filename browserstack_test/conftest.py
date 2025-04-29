@@ -6,14 +6,19 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from utils.config import BROWSERSTACK_HUB_URL, BROWSERS
 
 
+# Always test these browsers
+BROWSER_LIST = ["windows_chrome", "mac_firefox", "galaxy_s22"]
+
+
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="windows_chrome",
-                     help="Browser configuration to use for testing")
+    parser.addoption("--browser", action="append",  # <-- CHANGED from 'store' to 'append' to collect multiple values
+                     help="Browser configuration(s) to use for testing")
 
 
-@pytest.fixture
+@pytest.fixture(params=["windows_chrome", "mac_firefox", "galaxy_s22"])  # <-- Parametrize to run all 3 together
 def browser_config(request):
-    return BROWSERS[request.config.getoption("--browser")]
+    browser_name = request.param
+    return BROWSERS[browser_name]
 
 
 @pytest.fixture
@@ -21,6 +26,8 @@ def driver(browser_config):
     """
     Initialize WebDriver based on the browser configuration
     """
+    
+    
     is_mobile = 'deviceName' in browser_config
 
     bstack_options = {
