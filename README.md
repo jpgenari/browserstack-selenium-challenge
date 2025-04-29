@@ -110,9 +110,9 @@ python3 -m pytest test_bstack_demo.py -n 3 -v
 - `-n 3`: Run tests with 3 parallel workers.
 - `-v`: Enable verbose output to show each test execution step clearly.
 
-## Screenshots
+## Deployments
 
-Screenshots from successful builds:
+Screenshots and links from successful builds:
 
 | **Deploy** | **Screenshot** | **Public Links** |
 |:---------|:---------------|:---------------|
